@@ -2,15 +2,17 @@
 
 =head1 NAME
 
-WIP - wip
+nagioscore-batch_ack - Batch acknowledge service/host problems for NAGIOS CORE
 
 =head1 SYNOPSIS
 
-WIP
+B<nagioscore-batch_ack> [I<OPTIONS>]
 
 =head1 DESCRIPTION
 
-WIP
+Batch acknowledge service/host problems for NAGIOS CORE.
+
+Tested with NAGIOS CORE 4.x.
 
 =cut
 
@@ -34,20 +36,8 @@ use JSON;
 
 $|++;
 
-
-## RUN AS 'nagios' user
-#     my $new_pwnam = nagios;
-#     my $new_pwuid = getpwnam($new_pwnam);
-#     my $new_grgid = getgrnam($new_pwnam);
-#     say "Change to user $ARGV[0] ($new_pwuid:$new_grgid)";
-#     $EGID = $new_grgid;
-#     die "$!" if "$!";
-#     $EUID = $new_pwuid;
-#     die "$!" if "$!";
-#     say "+UID  $UID";
-#     say "+GID  $GID";
-#     say "+EUID $EUID";
-#     say "+EGID $EGID";
+our $PKG_NAME = "nagioscore-batch_ack";
+our $PKG_VERSION = "0.1";
 
 our %opt = ( ##GENERAL
              'problem-hosts'        => 1,
@@ -214,7 +204,7 @@ sub status2hash {
 
 sub acknowledge_host_problem {
     ## usage:
-    ## acknowledge_host_problem($opt{command_file}, {HOSTSTATUS}, {MESSAGE});
+    ##   acknowledge_host_problem($opt{command_file}, {HOSTSTATUS}, {MESSAGE});
     my $command_file = shift;
     my $status = shift;
     my $msgdata = shift;
@@ -248,7 +238,7 @@ sub acknowledge_host_problem {
 
 sub acknowledge_service_problem {
     ## usage:
-    ## acknowledge_service_problem($opt{command_file}, {SERVICESTATUS}, {MESSAGE});
+    ##   acknowledge_service_problem($opt{command_file}, {SERVICESTATUS}, {MESSAGE});
     my $command_file = shift;
     my $status = shift;
     my $msgdata = shift;
@@ -283,7 +273,8 @@ sub acknowledge_service_problem {
 }
 
 sub read_prompt {
-    ## usage: my $reply = read_prompt($prompt_text, $default_reply);
+    ## usage:
+    ##   my $reply = read_prompt($prompt_text, $default_reply);
     my $prompt_text = shift;
     my $default_reply = shift;
 
@@ -323,7 +314,8 @@ sub read_prompt {
 }
 
 sub display_hoststatus {
-    ## usage: display_hoststatus($hoststatus);
+    ## usage:
+    ##   display_hoststatus($hoststatus);
     my $hs = shift;
     my $hsi = $hsinfo[$hs->{current_state}];
 
@@ -340,7 +332,8 @@ sub display_hoststatus {
 }
 
 sub display_servicestatus {
-    ## usage: display_servicestatus($hoststatus,$servicestatus);
+    ## usage:
+    ##   display_servicestatus($hoststatus,$servicestatus);
     my $hs = shift;
     my $ss = shift;
     my $hsi = $hsinfo[$hs->{current_state}];
@@ -364,89 +357,99 @@ sub display_servicestatus {
 
 =over
 
-=item B<--problem-hosts> | B<--ph>
+=item B<--problem-hosts>|B<--no-problem-hosts>
 
-=item B<--no-problem-hosts> | B<--no-ph>
+=item B<--ph>|B<--no-ph>
 
 Select problem hosts.  Default B<on>.
 
 
-=item B<--problem-services> | B<--ps>
+=item B<--problem-services>|B<--no-problem-services>
 
-=item B<--no-problem-services> | B<--no-ps>
+=item B<--ps>|B<--no-ps>
 
 Select problem services.  Default B<on>.
 
 
-=item B<--problems> | B<--pp>
+=item B<--problems>|B<--no-problems>
 
-=item B<--no-problems> | B<--no-pp>
+=item B<--pp>|B<--no-pp>
 
 Shortcut for B<--[no-]problem-hosts --[no-]problem-services>
 
 
-=item B<--hosts> I<REGEXP> | B<--hh> I<REGEXP>
+=item B<--hosts> I<REGEXP>
+
+=item B<--hh> I<REGEXP>
 
 Select only hosts matching I<REGEXP>.
 
 
-=item B<--hostgroups> I<REGEXP> |  B<--hg> I<REGEXP>
+=item B<--hostgroups> I<REGEXP>
+
+=item B<--hg> I<REGEXP>
 
 Select only hosts which are members of hostgroup I<NAME>.
 
 
-=item B<--services> I<REGEXP> | B<--ss> I<REGEXP>
+=item B<--services> I<REGEXP>
+
+=item B<--ss> I<REGEXP>
 
 Select only services matching I<REGEXP>.
 
 
-=item B<--servicegroups> I<REGEXP> |  B<--sg> I<REGEXP>
+=item B<--servicegroups> I<REGEXP>
+
+=item B<--sg> I<REGEXP>
 
 Select only services which are members of servicegroup I<REGEXP>.
 
 
-=item B<--ignore-problem-hosts> | B<--iph>
+=item B<--ignore-problem-hosts>|B<--no-ignore-problem-hosts>
 
-=item B<--no-ignore-problem-hosts> | B<--no-iph>
+=item B<--iph>|B<--no-iph>
 
 Ignore service problems on problem hosts.  Default B<on>.
 
 
-=item B<--ignore-acknowledged> | B<--ia>
+=item B<--ignore-acknowledged>|B<--no-ignore-acknowledged>
 
-=item B<--no-ignore-acknowledged> | B<--no-ia>
+=item B<--ia>|B<--no-ia>
 
 Ignore host or service problems which have already been acknowledged. Default B<on>.
 
 
-=item B<--ignore-ok> | B<--iok>
+=item B<--ignore-ok>|B<--no-ignore-ok> 
 
-=item B<--no-ignore-ok> | B<--no-iok>
+=item B<--iok>|B<--no-iok>
 
 Ignore hosts or services which have no problems.
 
 
-=item B<--acknowledge> | B<-a>
+=item B<--acknowledge>|B<--no-acknowledge>
 
-=item B<--no-acknowledge>
+=item B<-a>|B<--no-a>
 
 Acknowledge selected problems.  Default B<off>.
 
 
 
-=item B<--message> I<TEXT> | B<-m> I<TEXT>
+=item B<--message> I<TEXT>
+
+=item B<-m> I<TEXT>
 
 Acknowledgement message.  Requires B<--acknowledge>.  Default I<prompt>.
 
 
-=item B<--message-author> I<USERNANE> | B<-U> I<USERNAME>
+=item B<--message-author> I<USERNAME>
+
+=item B<-U> I<USERNAME>
 
 Specify the author of the acknowledgement message.  Requires B<--acknowledge>.  Default I<current user>.
 
 
-=item B<--color> | B<--colour> 
-
-=item B<--no-color> | B<--no-colour>
+=item B<--colour>|B<--no-colour>|B<--color>|B<--no-color>
 
 Default B<on>.
 
@@ -478,9 +481,11 @@ Default C</var/spool/nagios/cmd/nagios.cmd>.
 
 =over
 
-=item B<--help> | B<-h>
+=item B<--help>|B<-h>
 
-=item B<--options> | B<-H>
+=item B<--options>|B<-H>
+
+=item B<--version>|B<-V>
 
 =item B<--man>
 
@@ -519,10 +524,11 @@ GetOptions(\%opt,
            'objects_cache_file=s',
            'command_file=s',
            ### HELP
-           'help|h'         => sub { pod2usage(-verbose => 0) },
-           'options|opts|H' => sub { pod2usage(-verbose => 1) },
-           'man|M'          => sub { pod2usage(-verbose => 2) },
-    ) or pod2usage(-verbose   => 0);
+           'version|V'      => sub { pod2usage(-verbose => 0, -message => "${PKG_NAME} ${PKG_VERSION}") },
+           'help|h'         => sub { pod2usage(-verbose => 0, -message => "${PKG_NAME} ${PKG_VERSION}") },
+           'options|opts|H' => sub { pod2usage(-verbose => 1, -message => "${PKG_NAME} ${PKG_VERSION}") },
+           'man|M'          => sub { pod2usage(-verbose => 2, -message => "${PKG_NAME} ${PKG_VERSION}") },
+    ) or pod2usage(-verbose => 0);
 dprint Dumper \%opt, \@ARGV;
 
 $ENV{ANSI_COLORS_DISABLED} = $opt{color}?0:1;

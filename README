@@ -1,63 +1,72 @@
+nagioscore-batch_ack 0.1
 NAME
-    WIP - wip
+    nagioscore-batch_ack - Batch acknowledge service/host problems for
+    NAGIOS CORE
 
 SYNOPSIS
-    WIP
+    nagioscore-batch_ack [*OPTIONS*]
 
 DESCRIPTION
-    WIP
+    Batch acknowledge service/host problems for NAGIOS CORE.
+
+    Tested with NAGIOS CORE 4.x.
 
 OPTIONS
-    --problem-hosts | --ph
-    --no-problem-hosts | --no-ph
+    --problem-hosts|--no-problem-hosts
+    --ph|--no-ph
         Select problem hosts. Default on.
 
-    --problem-services | --ps
-    --no-problem-services | --no-ps
+    --problem-services|--no-problem-services
+    --ps|--no-ps
         Select problem services. Default on.
 
-    --problems | --pp
-    --no-problems | --no-pp
+    --problems|--no-problems
+    --pp|--no-pp
         Shortcut for --[no-]problem-hosts --[no-]problem-services
 
-    --hosts *REGEXP* | --hh *REGEXP*
+    --hosts *REGEXP*
+    --hh *REGEXP*
         Select only hosts matching *REGEXP*.
 
-    --hostgroups *REGEXP* | --hg *REGEXP*
+    --hostgroups *REGEXP*
+    --hg *REGEXP*
         Select only hosts which are members of hostgroup *NAME*.
 
-    --services *REGEXP* | --ss *REGEXP*
+    --services *REGEXP*
+    --ss *REGEXP*
         Select only services matching *REGEXP*.
 
-    --servicegroups *REGEXP* | --sg *REGEXP*
+    --servicegroups *REGEXP*
+    --sg *REGEXP*
         Select only services which are members of servicegroup *REGEXP*.
 
-    --ignore-problem-hosts | --iph
-    --no-ignore-problem-hosts | --no-iph
+    --ignore-problem-hosts|--no-ignore-problem-hosts
+    --iph|--no-iph
         Ignore service problems on problem hosts. Default on.
 
-    --ignore-acknowledged | --ia
-    --no-ignore-acknowledged | --no-ia
+    --ignore-acknowledged|--no-ignore-acknowledged
+    --ia|--no-ia
         Ignore host or service problems which have already been
         acknowledged. Default on.
 
-    --ignore-ok | --iok
-    --no-ignore-ok | --no-iok
+    --ignore-ok|--no-ignore-ok
+    --iok|--no-iok
         Ignore hosts or services which have no problems.
 
-    --acknowledge | -a
-    --no-acknowledge
+    --acknowledge|--no-acknowledge
+    -a|--no-a
         Acknowledge selected problems. Default off.
 
-    --message *TEXT* | -m *TEXT*
+    --message *TEXT*
+    -m *TEXT*
         Acknowledgement message. Requires --acknowledge. Default *prompt*.
 
-    --message-author *USERNANE* | -U *USERNAME*
+    --message-author *USERNAME*
+    -U *USERNAME*
         Specify the author of the acknowledgement message. Requires
         --acknowledge. Default *current user*.
 
-    --color | --colour
-    --no-color | --no-colour
+    --colour|--no-colour|--color|--no-color
         Default on.
 
   Nagios Files
@@ -71,8 +80,9 @@ OPTIONS
         Default "/var/spool/nagios/cmd/nagios.cmd".
 
   Help
-    --help | -h
-    --options | -H
+    --help|-h
+    --options|-H
+    --version|-V
     --man
         Help in varying degrees of verbosity.
 
