@@ -64,9 +64,9 @@ our %opt = ( ##GENERAL
 
 ## hashref
 our $nagdata;
-our @hsinfo = ( { text => "[-UP-]", color => "cyan" },
+our @hsinfo = ( { text => "[-UP-]", color => "bright_cyan" },
                 { text => "[DOWN]", color => "white on_red" } );
-our @ssinfo = ( { text => "[-OK-]", color => "cyan" },
+our @ssinfo = ( { text => "[-OK-]", color => "bright_cyan" },
                 { text => "[WARN]", color => "bright_yellow" },
                 { text => "[CRIT]", color => "bright_red" },
                 { text => "[UNKN]", color => "faint" },
