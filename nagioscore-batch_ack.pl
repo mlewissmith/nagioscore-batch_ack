@@ -218,7 +218,7 @@ sub acknowledge_host_problem {
                 host => $status->{host_name},
                 sticky => 2,
                 notify => 1,
-                persistent => 1,
+                persistent => 0,
                 author => $msgdata->{author},
                 comment => $msgdata->{message} );
 
@@ -253,7 +253,7 @@ sub acknowledge_service_problem {
                 service => $status->{service_description},
                 sticky => 2,
                 notify => 1,
-                persistent => 1,
+                persistent => 0,
                 author => $msgdata->{author},
                 comment => $msgdata->{message} );
 
