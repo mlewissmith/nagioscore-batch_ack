@@ -37,7 +37,7 @@ use JSON;
 $|++;
 
 our $PKG_NAME = "nagioscore-batch_ack";
-our $PKG_VERSION = "0.1.2";
+our $PKG_VERSION = "0.1.3";
 
 our %opt = ( ##GENERAL
              'problem-hosts'        => 1,
