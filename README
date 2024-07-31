@@ -1,4 +1,4 @@
-nagioscore-batch_ack 0.1.2
+nagioscore-batch_ack 0.1.3
 NAME
     nagioscore-batch_ack - Batch acknowledge service/host problems for
     NAGIOS CORE
