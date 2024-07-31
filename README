@@ -1,0 +1,78 @@
+NAME
+    WIP - wip
+
+SYNOPSIS
+    WIP
+
+DESCRIPTION
+    WIP
+
+OPTIONS
+    --problem-hosts | --ph
+    --no-problem-hosts | --no-ph
+        Select problem hosts. Default on.
+
+    --problem-services | --ps
+    --no-problem-services | --no-ps
+        Select problem services. Default on.
+
+    --problems | --pp
+    --no-problems | --no-pp
+        Shortcut for --[no-]problem-hosts --[no-]problem-services
+
+    --hosts *REGEXP* | --hh *REGEXP*
+        Select only hosts matching *REGEXP*.
+
+    --hostgroups *REGEXP* | --hg *REGEXP*
+        Select only hosts which are members of hostgroup *NAME*.
+
+    --services *REGEXP* | --ss *REGEXP*
+        Select only services matching *REGEXP*.
+
+    --servicegroups *REGEXP* | --sg *REGEXP*
+        Select only services which are members of servicegroup *REGEXP*.
+
+    --ignore-problem-hosts | --iph
+    --no-ignore-problem-hosts | --no-iph
+        Ignore service problems on problem hosts. Default on.
+
+    --ignore-acknowledged | --ia
+    --no-ignore-acknowledged | --no-ia
+        Ignore host or service problems which have already been
+        acknowledged. Default on.
+
+    --ignore-ok | --iok
+    --no-ignore-ok | --no-iok
+        Ignore hosts or services which have no problems.
+
+    --acknowledge | -a
+    --no-acknowledge
+        Acknowledge selected problems. Default off.
+
+    --message *TEXT* | -m *TEXT*
+        Acknowledgement message. Requires --acknowledge. Default *prompt*.
+
+    --message-author *USERNANE* | -U *USERNAME*
+        Specify the author of the acknowledgement message. Requires
+        --acknowledge. Default *current user*.
+
+    --color | --colour
+    --no-color | --no-colour
+        Default on.
+
+  Nagios Files
+    --status_file *FILE*
+        Default "/var/spool/nagios/status.dat".
+
+    --objects_cache_file *FILE*
+        Default "/var/spool/nagios/objects.cache".
+
+    --command_file *FILE*
+        Default "/var/spool/nagios/cmd/nagios.cmd".
+
+  Help
+    --help | -h
+    --options | -H
+    --man
+        Help in varying degrees of verbosity.
+
