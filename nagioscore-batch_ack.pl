@@ -8,6 +8,8 @@ nagioscore-batch_ack - Batch acknowledge service/host problems for NAGIOS CORE
 
 B<nagioscore-batch_ack> [I<OPTIONS>]
 
+B<nagioscore-batch_ack> B<--help>|B<-h>|B<--options>|B<-H>|B<--version>|B<-V>|B<--man>
+
 =head1 DESCRIPTION
 
 Batch acknowledge service/host problems for NAGIOS CORE.
@@ -37,7 +39,7 @@ use JSON;
 $|++;
 
 our $PKG_NAME = "nagioscore-batch_ack";
-our $PKG_VERSION = "0.1.3";
+our $PKG_VERSION = "0.1.4";
 
 our %opt = ( ##GENERAL
              'problem-hosts'        => 1,
@@ -357,99 +359,77 @@ sub display_servicestatus {
 
 =over
 
-=item B<--problem-hosts>|B<--no-problem-hosts>
-
-=item B<--ph>|B<--no-ph>
+=item B<--problem-hosts>, B<--no-problem-hosts>, B<--ph>, B<--no-ph>
 
 Select problem hosts.  Default B<on>.
 
 
-=item B<--problem-services>|B<--no-problem-services>
-
-=item B<--ps>|B<--no-ps>
+=item B<--problem-services>, B<--no-problem-services>, B<--ps>, B<--no-ps>
 
 Select problem services.  Default B<on>.
 
 
-=item B<--problems>|B<--no-problems>
-
-=item B<--pp>|B<--no-pp>
+=item B<--problems>, B<--no-problems>, B<--pp>, B<--no-pp>
 
 Shortcut for B<--[no-]problem-hosts --[no-]problem-services>
 
 
-=item B<--hosts> I<REGEXP>
-
-=item B<--hh> I<REGEXP>
+=item B<--hosts> I<REGEXP>, B<--hh> I<REGEXP>
 
 Select only hosts matching I<REGEXP>.
 
 
-=item B<--hostgroups> I<REGEXP>
-
-=item B<--hg> I<REGEXP>
+=item B<--hostgroups> I<REGEXP>, B<--hg> I<REGEXP>
 
 Select only hosts which are members of hostgroup I<NAME>.
 
 
-=item B<--services> I<REGEXP>
-
-=item B<--ss> I<REGEXP>
+=item B<--services> I<REGEXP>, B<--ss> I<REGEXP>
 
 Select only services matching I<REGEXP>.
 
 
-=item B<--servicegroups> I<REGEXP>
-
-=item B<--sg> I<REGEXP>
+=item B<--servicegroups> I<REGEXP>, B<--sg> I<REGEXP>
 
 Select only services which are members of servicegroup I<REGEXP>.
 
 
-=item B<--ignore-problem-hosts>|B<--no-ignore-problem-hosts>
-
-=item B<--iph>|B<--no-iph>
+=item B<--ignore-problem-hosts>, B<--no-ignore-problem-hosts>, B<--iph>, B<--no-iph>
 
 Ignore service problems on problem hosts.  Default B<on>.
 
 
-=item B<--ignore-acknowledged>|B<--no-ignore-acknowledged>
-
-=item B<--ia>|B<--no-ia>
+=item B<--ignore-acknowledged>, B<--no-ignore-acknowledged>, B<--ia>, B<--no-ia>
 
 Ignore host or service problems which have already been acknowledged. Default B<on>.
 
 
-=item B<--ignore-ok>|B<--no-ignore-ok> 
-
-=item B<--iok>|B<--no-iok>
+=item B<--ignore-ok>, B<--no-ignore-ok>, B<--iok>, B<--no-iok>
 
 Ignore hosts or services which have no problems.
 
 
-=item B<--acknowledge>|B<--no-acknowledge>
-
-=item B<-a>|B<--no-a>
+=item B<--acknowledge>, B<--no-acknowledge>, B<-a>, B<--no-a>
 
 Acknowledge selected problems.  Default B<off>.
 
 
+=item B<--all>
 
-=item B<--message> I<TEXT>
+Shortcut for B<--no-ignore-acknowledged --no-ignore-ok>.
 
-=item B<-m> I<TEXT>
+
+=item B<--message> I<TEXT>, B<-m> I<TEXT>
 
 Acknowledgement message.  Requires B<--acknowledge>.  Default I<prompt>.
 
 
-=item B<--message-author> I<USERNAME>
-
-=item B<-U> I<USERNAME>
+=item B<--message-author> I<USERNAME>, B<-U> I<USERNAME>
 
 Specify the author of the acknowledgement message.  Requires B<--acknowledge>.  Default I<current user>.
 
 
-=item B<--colour>|B<--no-colour>|B<--color>|B<--no-color>
+=item B<--colour>, B<--no-colour>, B<--color>, B<--no-color>
 
 Default B<on>.
 
@@ -481,11 +461,11 @@ Default C</var/spool/nagios/cmd/nagios.cmd>.
 
 =over
 
-=item B<--help>|B<-h>
+=item B<--help>, B<-h>
 
-=item B<--options>|B<-H>
+=item B<--options>, B<-H>
 
-=item B<--version>|B<-V>
+=item B<--version>, B<-V>
 
 =item B<--man>
 
@@ -516,6 +496,7 @@ GetOptions(\%opt,
            'ignore-problem-hosts|iph!',
            'ignore-acknowledged|ia!',
            'ignore-ok|iok!',
+           'all!' => sub { $opt{'ignore-acknowledged'} = $opt{'ignore-ok'} = $_[1]?0:1 },
            'acknowledge|a!',
            'message|m=s',
            'message-author|U=s',
@@ -646,3 +627,43 @@ if ($opt{'problem-services'}) {
         }
     }
 }
+
+=head1 EXAMPLES
+
+=over
+
+=item $ B<nagioscore-batch_ack>
+
+Show all outstanding problems, eg:
+
+   [DOWN] | hostname1 | hostcheck_ping | CRITICAL - Host Unreachable (...)
+   [DOWN] | hostname2 | hostcheck_ping | PING CRITICAL - Packet loss = 100%
+   [WARN] | hostname3 | check_load | WARNING - load average per CPU: 1.05, 1.02, 1.03
+   [CRIT] | hostname4 | check_load | CRITICAL - load average per CPU: 1.86, 1.96, 2.01
+   ...
+
+=item $ B<nagioscore-batch_ack -a>
+
+Acknowledge all outstanding problems, prompt for comment for each acknowledgement.
+
+=item $ B<nagioscore-batch_ack -U I<username> -a -m "I<COMMENT>">
+
+Acknowledge all outstanding problems as user I<username> with acknowledgement
+message I<COMMENT>.
+
+=item $ B<nagioscore-batch_ack --hg desktops -a -m "I<COMMENT>">
+
+Acknowledge all outstanding problems on hosts in hostgroup B<desktops>.
+
+=item $ B<nagioscore-batch_ack --no-ignore-ok --no-ignore-acknowledged>
+
+=item $ B<nagioscore-batch_ack --noiok --noia>
+
+=item $ B<nagioscore-batch_ack --all>
+
+Show all host and service check statuses.
+
+
+=back
+
+=cut
