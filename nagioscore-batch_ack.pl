@@ -37,7 +37,7 @@ use JSON;
 $|++;
 
 our $PKG_NAME = "nagioscore-batch_ack";
-our $PKG_VERSION = "0.1";
+our $PKG_VERSION = "0.1.1";
 
 our %opt = ( ##GENERAL
              'problem-hosts'        => 1,
@@ -500,7 +500,8 @@ GetOptions(\%opt,
            ### DEBUG
            'debug|D!',
            'debug-fetch|DF=s' => sub {
-               system("scp $_[1]:/var/spool/nagios/{objects.cache,status.dat} .");
+               system("scp $_[1]:$opt{status_file} .");
+               system("scp $_[1]:$opt{objects_cache_file} .");
                exit;
            },
            'debug-dump|DD=s',
