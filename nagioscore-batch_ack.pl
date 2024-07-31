@@ -8,7 +8,7 @@ nagioscore-batch_ack - Batch acknowledge service/host problems for NAGIOS CORE
 
 B<nagioscore-batch_ack> [I<OPTIONS>]
 
-B<nagioscore-batch_ack> B<--help>|B<-h>|B<--options>|B<-H>|B<--version>|B<-V>|B<--man>
+B<nagioscore-batch_ack> B<--help> | B<--options> | B<--version> | B<--man>
 
 =head1 DESCRIPTION
 
@@ -467,7 +467,7 @@ Default C</var/spool/nagios/cmd/nagios.cmd>.
 
 =item B<--version>, B<-V>
 
-=item B<--man>
+=item B<--man>,B<-M>
 
 Help in varying degrees of verbosity.
 
@@ -506,10 +506,10 @@ GetOptions(\%opt,
            'objects_cache_file=s',
            'command_file=s',
            ### HELP
-           'version|V'      => sub { pod2usage(-verbose => 0, -message => "${PKG_NAME} ${PKG_VERSION}") },
-           'help|h'         => sub { pod2usage(-verbose => 0, -message => "${PKG_NAME} ${PKG_VERSION}") },
-           'options|opts|H' => sub { pod2usage(-verbose => 1, -message => "${PKG_NAME} ${PKG_VERSION}") },
-           'man|M'          => sub { pod2usage(-verbose => 2, -message => "${PKG_NAME} ${PKG_VERSION}") },
+           'version|V'      => sub { pod2usage(-verbose => 0, -message => "${PKG_NAME} ${PKG_VERSION}\n") },
+           'help|h'         => sub { pod2usage(-verbose => 0, -message => "${PKG_NAME} ${PKG_VERSION}\n") },
+           'options|opts|H' => sub { pod2usage(-verbose => 1, -message => "${PKG_NAME} ${PKG_VERSION}\n") },
+           'man|M'          => sub { pod2usage(-verbose => 2, -message => "${PKG_NAME} ${PKG_VERSION}\n") },
     ) or pod2usage(-verbose => 0);
 dprint Dumper \%opt, \@ARGV;
 
